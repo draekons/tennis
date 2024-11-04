@@ -66,7 +66,11 @@
         document.getElementById('prevArrow').classList.remove("disabled");
         document.getElementById('nextArrow').classList.remove("disabled");
       }
-      carrusel.style.transform = `translateX(-${index * 330 / 3}%)`;
+      if (window.innerWidth <= 768) 
+        fun = `${index * 380 / 3}`;
+      else
+        fun = `${index * 330 / 3}`;
+      carrusel.style.transform = `translateX(-${fun}%)`;
       currentSlide = index;
     }
 
