@@ -1,0 +1,49 @@
+{{ 'history.css' | asset_url | stylesheet_tag }}
+<div class="section_history">
+  <div class="h_div1">
+    <p class="h_p1">{{ section.settings.titulo2 }}</p>
+    <div>
+      <h2 class="h_h1">{{ section.settings.titulo }}</h2>
+      <p class="h_p2">{{ section.settings.descripcion }}</p>
+    </div>
+    <a class="h_btn" href="">{{ section.settings.button }}<span>&#8594;</span></a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "history",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título",
+      "default": "Título de la Sección"
+    },
+    {
+      "type": "text",
+      "id": "titulo2",
+      "label": "Título 2",
+      "default": "Título 2 de la Sección"
+    },
+    {
+      "type": "textarea",
+      "id": "descripcion",
+      "label": "Descripción",
+      "default": "Descripción de la sección"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Botón",
+      "default": "Texto del botón"
+    }
+  ],
+  "presets": [
+    {
+      "name": "history",
+      "category": "Personalizadas"
+    }
+  ]
+}
+{% endschema %}

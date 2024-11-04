@@ -1,0 +1,129 @@
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+
+<footer>
+  <div>
+    {% if section.settings.footer_menu %}
+      <ul class="footerDropdown">
+        {% for link in linklists[section.settings.footer_menu].links %}
+          <li>
+            <a href="{{ link.url }}" title="{{ link.title }}">
+              {% if link.url == request.path %}
+                <strong>{{ link.title }}</strong>
+              {% else %}
+                {{ link.title }}
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="social-media-icons">
+        {% if section.settings.linkedin_url and section.settings.linkedin_icon %}
+          <a href="{{ section.settings.linkedin_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ section.settings.linkedin_icon | image_url: width: 31, height: 31 }}" alt="LinkedIn" class="social-icon">
+          </a>
+        {% endif %}
+        
+        {% if section.settings.vemo_url and section.settings.vemo_icon %}
+          <a href="{{ section.settings.vemo_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ section.settings.vemo_icon | image_url: width: 31, height: 31 }}" alt="Vemo" class="social-icon">
+          </a>
+        {% endif %}
+      
+        {% if section.settings.instagram_url and section.settings.instagram_icon %}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ section.settings.instagram_icon | image_url: width: 31, height: 31 }}" alt="Instagram" class="social-icon">
+          </a>
+        {% endif %}
+      
+        {% if section.settings.twitter_url and section.settings.twitter_icon %}
+          <a href="{{ section.settings.twitter_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ section.settings.twitter_icon | image_url: width: 31, height: 31 }}" alt="Twitter" class="social-icon">
+          </a>
+        {% endif %}
+        
+        {% if section.settings.facebook_url and section.settings.facebook_icon %}
+          <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ section.settings.facebook_icon | image_url: width: 31, height: 31 }}" alt="Facebook" class="social-icon">
+          </a>
+        {% endif %}
+      </div>
+  
+    {% else %}
+      <p>Seleccione un menú para mostrar en el footer.</p>
+    {% endif %}
+  </div>
+  {% if section.settings.footer_menu %}
+    <img src="{{ section.settings.logo | image_url: width: 55, height: 55 }}" alt="Logo" class="logo">
+  {% else %}
+    <p>Seleccione un menú para mostrar en el footer.</p>
+  {% endif %}
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Seleccione el menú para el footer"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo del footer"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "linkedin_icon",
+      "label": "LinkedIn Icon"
+    },
+    {
+      "type": "url",
+      "id": "vemo_url",
+      "label": "Vemo URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "vemo_icon",
+      "label": "Vemo Icon"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "instagram_icon",
+      "label": "Instagram Icon"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "twitter_icon",
+      "label": "Twitter Icon"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "facebook_icon",
+      "label": "Facebook Icon"
+    },
+  ]
+}
+{% endschema %}

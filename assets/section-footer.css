@@ -1,0 +1,47 @@
+footer {
+  background: #cbe346;
+  padding: 78px 64px;
+  display: flex;
+  align-items: center;
+}
+
+.footerDropdown {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.footerDropdown li {
+  margin-right: 50px;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #2b3049;
+}
+
+.social-media-icons {
+  margin-top: 20px;
+}
+
+.social-icon{
+  margin-right: 12px;
+}
+
+.logo {
+  margin-left: auto;
+  width: 55px;
+}
+
+@media screen and (max-width: 1100px){
+  .footerDropdown {
+      display: block;
+  }
+  footer {
+    display: block;
+  }
+  .logo {
+    margin-top: 20px;
+  }
+}

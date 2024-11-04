@@ -1,0 +1,134 @@
+{{ 'carrousel_product.css' | asset_url | stylesheet_tag }}
+<div class="div1">
+  <div class="div2" style="background-image: url({{ section.settings.image | image_url }});">
+    <div>
+      <h2 class="cp_h1">{{ section.settings.titulo }}</h2>
+      <p class="cp_p1">{{ section.settings.descripcion }}</p>
+      <div>
+        <span class="bullet bullet_active"></span>
+        <span class="bullet"></span>
+        <span class="bullet"></span>
+        <span class="bullet"></span>
+      </div>
+      <span id="prevSlide">
+        <svg id="prevArrow" width="54" height="54" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow disabled">
+          <polygon points="16,4 8,12 16,20" fill="white"/>
+        </svg>
+      </span>
+      <span id="nextSlide">
+        <svg id="nextArrow" width="54" height="54" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow">
+          <polygon points="8,4 16,12 8,20" fill="white"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <div class="coleccion-productos">
+    {% if section.settings.coleccion_seleccionada != blank %}
+      <div class="productos-carrusel">
+        {% assign productos = collections[section.settings.coleccion_seleccionada].products %}
+        {% for product in productos limit: section.settings.productos_mostrar %}
+          <a href="{{ product.url }}" class="producto">
+            <span>{{ forloop.index }}</span>
+            <img src="{{ product.featured_image | image_url: width: 122,height: 122 }}" alt="{{ product.title }}">
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Selecciona una colección para mostrar sus productos.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const carrusel = document.querySelector('.productos-carrusel');
+    let currentSlide = 0;
+    let currentIndex = 0;
+    const limit = {{section.settings.productos_mostrar}};
+    const steps = document.querySelectorAll('.bullet');
+
+    function updateActiveStep() {
+      steps.forEach(step => step.classList.remove('bullet_active'));
+      
+      if (currentIndex >= 0 && currentIndex < steps.length) {
+        steps[currentIndex].classList.add('bullet_active');
+      }
+    }
+
+    function showSlide(index) {
+      if(index <= 0){
+        document.getElementById('prevArrow').classList.add("disabled");
+      }
+      else if(index >= (limit/3)-1){
+        document.getElementById('nextArrow').classList.add("disabled");
+      }
+      else{
+        document.getElementById('prevArrow').classList.remove("disabled");
+        document.getElementById('nextArrow').classList.remove("disabled");
+      }
+      carrusel.style.transform = `translateX(-${index * 330 / 3}%)`;
+      currentSlide = index;
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', () => {
+      if (currentIndex < steps.length - 1) {
+        currentIndex++;
+        updateActiveStep();
+      }
+      if(currentSlide < (limit/3)-1)
+        showSlide(currentSlide + 1);
+    });
+    document.getElementById('prevSlide').addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateActiveStep();
+      }
+      if(currentSlide != 0)
+        showSlide(currentSlide - 1)
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Carrousel Product",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "titulo",
+      "label": "Título",
+      "default": "Título de la Sección"
+    },
+    {
+      "type": "textarea",
+      "id": "descripcion",
+      "label": "Descripción",
+      "default": "Descripción de la sección"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de la Sección"
+    },
+    {
+      "type": "collection",
+      "id": "coleccion_seleccionada",
+      "label": "Selecciona la colección"
+    },
+    {
+      "type": "range",
+      "id": "productos_mostrar",
+      "label": "Número de productos",
+      "default": 12,
+      "min": 1,
+      "max": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrousel Product",
+      "category": "Personalizadas"
+    }
+  ]
+}
+{% endschema %}
